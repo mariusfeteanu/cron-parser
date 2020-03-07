@@ -1,5 +1,6 @@
 from typing import List, Tuple
 from enum import Enum, auto
+import string
 
 from model import *
 
@@ -45,7 +46,7 @@ def next_token(remaining: str) -> Tuple[Token, str]:
             ii += 1
             token_type = SIMPLE_TOKENS[c]
             break
-        if c in '0123456789' and (token_type is None or token_type == TokenType.NUMBER):
+        if c in string.digits and (token_type is None or token_type == TokenType.NUMBER):
             ii += 1
             if token_type is None:
                 token_type = TokenType.NUMBER

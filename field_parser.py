@@ -123,7 +123,7 @@ def validate_range(interval: Interval, start: int, end: int):
     validate_value(interval, end)
     if end < start:
         raise ValidationException(
-            f'Invalid range ({start}, {end}), end ({end}) is before start ({start})')
+            f'Invalid range ({start}, {end}), end ({end}) is before start ({start}) in field {interval.name}')
 
 
 def parse_field(interval: Interval, value: str) -> List[int]:

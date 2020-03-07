@@ -10,9 +10,9 @@ class TokenizationException(Exception):
 class TokenType(Enum):
     NUMBER = auto()
     ALL = auto()
-    STEP = auto()
-    RANGE = auto()
-    LIST = auto()
+    STEP_SEP = auto()
+    RANGE_SEP = auto()
+    LIST_SEP = auto()
 
     def __repr__(self):  # pragma: no cover
         return self.name
@@ -20,9 +20,9 @@ class TokenType(Enum):
 
 SIMPLE_TOKENS = {
     '*': TokenType.ALL,
-    '/': TokenType.STEP,
-    '-': TokenType.RANGE,
-    ',': TokenType.LIST
+    '/': TokenType.STEP_SEP,
+    '-': TokenType.RANGE_SEP,
+    ',': TokenType.LIST_SEP
     }
 
 @dataclass

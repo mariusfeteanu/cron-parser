@@ -60,17 +60,17 @@ START.add(TokenType.ALL, ALL)
 START.add(TokenType.NUMBER, NUMBER)
 
 # 1-3
-NUMBER.add(TokenType.RANGE, RANGE)
+NUMBER.add(TokenType.RANGE_SEP, RANGE)
 RANGE.add(TokenType.NUMBER, RANGE_NUMBER)
 
 # */5
-ALL.add(TokenType.STEP, STEP)
+ALL.add(TokenType.STEP_SEP, STEP)
 STEP.add(TokenType.NUMBER, STEP_NUMBER)
 
 # 1,2,3
-NUMBER.add(TokenType.LIST, LIST)
+NUMBER.add(TokenType.LIST_SEP, LIST)
 LIST.add(TokenType.NUMBER, LIST_NUMBER)
-LIST_NUMBER.add(TokenType.LIST, LIST)
+LIST_NUMBER.add(TokenType.LIST_SEP, LIST)
 
 
 def machine(

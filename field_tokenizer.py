@@ -38,23 +38,22 @@ class Token:
 def next_token(remaining: str) -> Tuple[Token, str]:
     
     ii = 0
-    current_token_type = None
+    token_type = None
     
     for c in remaining[ii:]:
-        simple_token = SIMPLE_TOKENS.get(c)
-        if simple_token is not None and current_token_type is None:
+        if c in SIMPLE_TOKENS and token_type is None:
             ii += 1
-            current_token_type = simple_token
+            token_type = SIMPLE_TOKENS[c]
             break
-        if c in '0123456789' and (current_token_type is None or current_token_type == TokenType.NUMBER):
+        if c in '0123456789' and (token_type is None or token_type == TokenType.NUMBER):
             ii += 1
-            if current_token_type is None:
-                current_token_type = TokenType.NUMBER
+            if token_type is None:
+                token_type = TokenType.NUMBER
         else:
             break
     
-    if current_token_type is not None:
-        return Token(current_token_type, remaining[:ii]), remaining[ii:]
+    if token_type is not None:
+        return Token(token_type, remaining[:ii]), remaining[ii:]
     else:
         raise TokenizationException(f'Unrecognized token: "{c}" from "{remaining}"')
 

@@ -15,6 +15,11 @@ def test_parse_args():
     assert cron_spec.day_of_week == '1-5'
 
 
+def test_parse_args_spaces():
+    args = ['cron_parser.py', '*/15 0 1,2 * 1-5 /usr/bin/find yes']
+    cron_spec = parse_args(args)
+
+
 def test_format_timetable():
     timetable = CronTimeTable(
         minute = [0, 15, 30, 45],
@@ -43,10 +48,6 @@ def test_parse_args_error_argcount():
 
 
 def test_parse_args_error_cron_spec():
-    with raises(ValueError):
-        args = ['cron_parser.py', '*/15 0 1,2 * 1-5 * /usr/bin/find']
-        cron_spec = parse_args(args)
-
     with raises(ValueError):
         args = ['cron_parser.py', '*/15 0 1,2 * /usr/bin/find']
         cron_spec = parse_args(args)

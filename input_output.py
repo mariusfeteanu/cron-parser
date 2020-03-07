@@ -20,7 +20,7 @@ def parse_args(args: List[str]) -> CronSpec:
         raise ValueError(USAGE)
     
     argument_parts = args[1].split(' ')
-    if len(argument_parts) != 6:
+    if len(argument_parts) < 6:
         raise ValueError(USAGE)
     
     return CronSpec(

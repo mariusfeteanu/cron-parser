@@ -8,11 +8,7 @@ from model import CronTimeTable
 
 
 def main():
-    try:
-        cron_spec = parse_args(argv)
-    except ValueError as e:
-        print(e)
-        exit(1)
+    cron_spec = parse_args(argv)
     
     timetable = CronTimeTable(
         minute=parse_field(Interval.MINUTE, cron_spec.minute),

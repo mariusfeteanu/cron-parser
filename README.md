@@ -43,4 +43,8 @@ python cron_parser.py "*/15 0 1,2 * 1-5 /usr/bin/find"
 ```
 
 ## Project structure:
-**TODO**
+- [mode](model.py): type definitions
+- [input_output](input_output.py): read cron tables and write time tables
+- [field_tokenizer](field_tokenizer.py): interpret text fields into tokens to parse
+- [field_parser](field_parser.py): parse a string of tokens into a time table
+- [cron_parser](cron_parser.py): utility to read the cron tab from the cli and print the time table

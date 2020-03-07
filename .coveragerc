@@ -1,0 +1,6 @@
+[run]
+omit =
+    .env/*
+    test/*
+    setup.py
+    cron_parser.py

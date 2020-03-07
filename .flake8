@@ -1,0 +1,8 @@
+[flake8]
+exclude =
+    .git
+    test
+    setup.py
+    .env
+    .pytest_cache
+max-line-length = 120

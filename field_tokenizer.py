@@ -1,12 +1,12 @@
 from typing import List, Tuple
 from enum import Enum, auto
 import string
-
-from model import *
+from dataclasses import dataclass
 
 
 class TokenizationException(Exception):
     pass
+
 
 class TokenType(Enum):
     NUMBER = auto()
@@ -26,6 +26,7 @@ SIMPLE_TOKENS = {
     ',': TokenType.LIST_SEP
     }
 
+
 @dataclass
 class Token:
     token_type: TokenType
@@ -36,11 +37,13 @@ class Token:
             return str(self.token_type.name)
         return f'{self.token_type.name}: {self.value}'
 
+
 def next_token(remaining: str) -> Tuple[Token, str]:
-    
+
     ii = 0
     token_type = None
-    
+    c = None
+
     for c in remaining[ii:]:
         if c in SIMPLE_TOKENS and token_type is None:
             ii += 1
@@ -52,11 +55,14 @@ def next_token(remaining: str) -> Tuple[Token, str]:
                 token_type = TokenType.NUMBER
         else:
             break
-    
+
     if token_type is not None:
         return Token(token_type, remaining[:ii]), remaining[ii:]
     else:
-        raise TokenizationException(f'Unrecognized token: "{c}" from "{remaining}"')
+        if c is not None:
+            raise TokenizationException(f'Unrecognized token: "{c}" from "{remaining}"')
+        else:  # pragma: no cover
+            raise NotImplementedError("Don't call this with an empty string")
 
 
 def tokenize(field: str) -> List[Token]:

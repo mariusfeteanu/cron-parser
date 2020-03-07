@@ -37,6 +37,13 @@ Unit tests
 pytest --cov=. --cov-report term-missing test
 ```
 
+Check style
+```shell
+flake8
+pylint *.py
+mypy
+```
+
 Run the command
 ```shell
 python cron_parser.py "*/15 0 1,2 * 1-5 /usr/bin/find"

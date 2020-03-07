@@ -1,9 +1,7 @@
 from typing import List, Tuple
-from dataclasses import dataclass
 from enum import Enum
 
-from field_tokenizer import tokenize, TokenType, Token, token_types
-from input_output import CronSpec
+from field_tokenizer import tokenize, TokenType, Token
 
 
 class ParsingException(Exception):
@@ -29,20 +27,21 @@ class StateTransition:
 
 
 class State:
-    def __init__(self, name, transitions = None, allow_stop = False):
+    def __init__(self, name, transitions=None, allow_stop=False):
         if transitions is None:
             transitions = []
         self.transitions: List[StateTransition] = transitions
         self.allow_stop: bool = allow_stop
         self.name = name
-    
+
     def add(self, token_type, next_state):
         self.transitions.append(
             StateTransition(token_type, next_state)
         )
-    
+
     def __repr__(self):  # pragma: no cover
         return self.name
+
 
 START = State('START')
 ALL = State('ALL', allow_stop=True)
@@ -74,36 +73,36 @@ LIST_NUMBER.add(TokenType.LIST_SEP, LIST)
 
 
 def machine(
-    state: State,
-    input: List[Token],
-    collected_params: List[str] = None
-    ) -> Tuple[State, List[str]]:
+        state: State,
+        input_tokens: List[Token],
+        collected_params: List[str] = None
+        ) -> Tuple[State, List[str]]:
     VALUE_TOKEN_TYPES = [TokenType.NUMBER]
 
     if collected_params is None:
         collected_params = []
 
-    if not input:  # end of input
+    if not input_tokens:  # end of input
         if state.allow_stop:
             return state, collected_params
         else:
             raise ParsingException(f'end of input in non-final state: {state}'
                                    f', parsed input {collected_params}')
-    
-    token = input[0]
-    remaining_input = input[1:]
+
+    token = input_tokens[0]
+    remaining_input = input_tokens[1:]
 
     for transition in state.transitions:
         if token.token_type == transition.token_type:
             next_state = transition.next_state
-            
+
             if token.token_type in VALUE_TOKEN_TYPES:
                 next_params = collected_params + [token.value]
             else:
                 next_params = collected_params
-            
+
             return machine(next_state, remaining_input, next_params)
-    
+
     raise ParsingException(f'Could not parse token "{token.value}" in state {state}')
 
 
